@@ -1,0 +1,3 @@
+#+TITLE: developer note
+* initialize project
+this repo based on https://www.howtographql.com/graphql-go/1-getting-started/
