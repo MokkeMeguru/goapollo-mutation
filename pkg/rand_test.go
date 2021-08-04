@@ -30,6 +30,14 @@ func TestBasicRandomGenerator_RandInt(t *testing.T) {
 			wantMore: -1,
 			wantErr:  false,
 		},
+		{
+			name:     "invalid args",
+			fields:   fields{Seed: 100},
+			args:     args{closedLeft: 0, openedRight: 0},
+			wantLess: 100,
+			wantMore: -1,
+			wantErr:  true,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
