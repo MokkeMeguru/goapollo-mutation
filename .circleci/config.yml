@@ -60,3 +60,6 @@ workflows:
       - show_artifacts_path:
           requires:
             - test
+      - upload_codecov:
+          requires:
+            - test
