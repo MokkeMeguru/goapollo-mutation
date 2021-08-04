@@ -32,7 +32,7 @@ jobs:
       - store_artifacts:
           path: /tmp/artifacts
   show_artifacts_path:
-    executor:
+    docker:
       - image: cimg/base:2021.07
     steps:
       - run:
