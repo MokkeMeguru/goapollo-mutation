@@ -53,9 +53,6 @@ workflows:
   builds:
     jobs:
       - test
-      - show_artifacts_path:
-          requires:
-            - test
       - upload_codecov:
           requires:
             - test
