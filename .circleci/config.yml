@@ -19,19 +19,25 @@ jobs:
             - go-build-cache-v1-{{ .Branch }}
             - go-build-cache-v1-
       - run: mkdir -p /tmp/artifacts
+      - run: mkdir -p /tmp/workspace
       - run:
           name: go test & coverage generate
           command: |
             go test -race ./... -coverprofile=c.out
             go tool cover -html=c.out -o coverage.html
             mv coverage.html /tmp/artifacts
-            mv c.out /tmp/artifacts
+            mv c.out /tmp/workspace
       - save_cache:
           key: go-build-cache-v1-{{ .Branch }}-{{ .Revision }}
           paths:
             - /home/circleci/.cache/go-build
       - store_artifacts:
           path: /tmp/artifacts
+      - persist_to_workspace:
+          root: /tmp/workspace
+          paths:
+            - c.out
+
   show_artifacts_path:
     docker:
       - image: cimg/base:2021.07
@@ -44,12 +50,15 @@ jobs:
             -u "$CIRCLE_API_TOKEN:")
             echo "export ARTIFACT_RESPONSE=$artifacts" >> $BASH_ENV
             echo $artifacts
+
   upload_codecov:
     docker:
       - image: cimg/base:2021.07
     steps:
+      - attach_workspace:
+          at: /tmp/workspace
       - codecov/upload:
-          file: /tmp/artifacts/c.out
+          file: /tmp/workspace/c.out
           token: CODECOV_TOKEN
 
 workflows:
