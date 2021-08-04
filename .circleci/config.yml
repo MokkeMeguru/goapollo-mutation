@@ -31,7 +31,6 @@ jobs:
             - /home/circleci/.cache/go-build
       - store_artifacts:
           path: /tmp/artifacts
-
 workflows:
   version: 2.1
   builds:
