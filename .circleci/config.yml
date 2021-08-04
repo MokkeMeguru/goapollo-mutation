@@ -38,6 +38,7 @@ jobs:
             -H "Accept: application/json" \
             -u "$CIRCLE_API_TOKEN:")
             echo "export ARTIFACT_RESPONSE=$artifacts" >> $BASH_ENV
+            echo $artifacts
 
 workflows:
   version: 2.1
