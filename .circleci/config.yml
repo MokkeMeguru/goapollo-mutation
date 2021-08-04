@@ -1,0 +1,33 @@
+version: 2.1
+orbs:
+  codecov: codecov/codecov@1.2.5
+  go: circleci/go@1.6.0
+jobs:
+  test:
+    steps:
+      - checkout
+      - go/mod-download-cached
+      - restore_cache:
+          keys:
+            - go-build-cache-v1-{{ .Branch }}--{{ .Revision }}
+            - go-build-cache-v1-{{ .Branch }}
+            - go-build-cache-v1-
+      - run: mkdir -p /tmp/artifacts
+      - run:
+          name: go test & coverage generate
+          command: |
+            go test ./... -coverprofile=c.out
+            go tool cover -html=c.out -o coverage.html
+            mv coverage.html /tmp/artifacts
+      - save_cache:
+          key: go-build-cache-v1-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - /home/circleci/.cache/go-build
+      - store_artifacts:
+          path: /tmp/artifacts
+
+workflows:
+  version: 2.1
+  builds:
+    jobs:
+      - test
