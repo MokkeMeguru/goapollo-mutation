@@ -31,6 +31,9 @@ jobs:
           key: go-build-cache-v1-{{ .Branch }}-{{ .Revision }}
           paths:
             - /home/circleci/.cache/go-build
+      - codecov/upload:
+          file: /tmp/workspace/c.out
+          token: CODECOV_TOKEN
       - store_artifacts:
           path: /tmp/artifacts
       - persist_to_workspace:
@@ -59,12 +62,6 @@ jobs:
       - run:
           name: show out
           command: cat /tmp/workspace/c.out
-      - run:
-          name: show log
-          command: echo $CODECOV_TOKEN
-      - codecov/upload:
-          file: /tmp/workspace/c.out
-          token: CODECOV_TOKEN
 
 workflows:
   version: 2.1
