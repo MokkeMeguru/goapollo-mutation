@@ -31,15 +31,21 @@ jobs:
           key: go-build-cache-v1-{{ .Branch }}-{{ .Revision }}
           paths:
             - /home/circleci/.cache/go-build
+      - run:
+          name: show-coverage
+          command: |
+            cat /tmp/workspace/c.out
+      - run: echo "below codecov/upload is success"
       - codecov/upload:
           file: /tmp/workspace/c.out
-          token: CODECOV_TOKEN
+          token: codecov_token
       - store_artifacts:
           path: /tmp/artifacts
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
             - c.out
+
   show_artifacts_path:
     docker:
       - image: cimg/base:2021.07
@@ -57,11 +63,16 @@ jobs:
     docker:
       - image: cimg/base:2021.07
     steps:
+      - checkout
       - attach_workspace:
           at: /tmp/workspace
       - run:
-          name: show out
-          command: cat /tmp/workspace/c.out
+          name: show-coverage
+          command: |
+            cat /tmp/workspace/c.out
+      - run: echo "below codecov/upload is failure"
+      - codecov/upload:
+          file: /tmp/workspace/c.out
 
 workflows:
   version: 2.1
