@@ -6,9 +6,6 @@ executors:
   build:
     docker:
       - image: circleci/golang:1.16
-  nodejs:
-    docker:
-      - image: circleci/nodejs:
 jobs:
   test:
     executor:
@@ -39,12 +36,13 @@ jobs:
       - image: cimg/base:2021.07
     steps:
       - run:
-        name: Get artifacts (to use this )
-        command: |
-          artifacts=$(curl -X GET   "https://circleci.com/api/v2/project/github/MokkeMeguru/goapollo-mutation/$CIRCLE_BUILD_NUM/artifacts" \
-          -H "Accept: application/json" \
-          -u "$CIRCLE_API_TOKEN:")
-          echo "export ARTIFACT_RESPONSE=$artifacts" >> $BASH_ENV
+          name: Get artifacts
+          command: |
+            artifacts=$(curl -X GET   "https://circleci.com/api/v2/project/github/MokkeMeguru/goapollo-mutation/$CIRCLE_BUILD_NUM/artifacts" \
+            -H "Accept: application/json" \
+            -u "$CIRCLE_API_TOKEN:")
+            echo "export ARTIFACT_RESPONSE=$artifacts" >> $BASH_ENV
+            echo $artifacts
 
 workflows:
   version: 2.1
