@@ -59,6 +59,10 @@ jobs:
       - run:
           name: show out
           command: cat /tmp/workspace/c.out
+      - run:
+          name: show log
+          comamnd: |
+            echo $CODECOV_TOKEN
       - codecov/upload:
           file: /tmp/workspace/c.out
           token: CODECOV_TOKEN
