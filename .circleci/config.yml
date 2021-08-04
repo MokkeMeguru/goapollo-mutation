@@ -50,7 +50,7 @@ jobs:
     steps:
       - codecov/upload:
           file: /tmp/artifacts/c.out
-          token: {{ CODECOV_TOKEN }}
+          token: CODECOV_TOKEN
 
 workflows:
   version: 2.1
