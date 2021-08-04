@@ -49,4 +49,6 @@ workflows:
   builds:
     jobs:
       - test
-      - show_artifacts_path
+      - show_artifacts_path:
+          requires:
+            - test
