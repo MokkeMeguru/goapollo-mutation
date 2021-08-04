@@ -31,7 +31,6 @@ jobs:
             - /home/circleci/.cache/go-build
       - store_artifacts:
           path: /tmp/artifacts
-
       - run:
           name: Get artifacts
           when: on_fail
@@ -40,6 +39,7 @@ jobs:
             -H "Accept: application/json" \
             -u "$CIRCLE_API_TOKEN:")
             echo "export ARTIFACT_RESPONSE=$artifacts" >> $BASH_ENV
+
 workflows:
   version: 2.1
   builds:
