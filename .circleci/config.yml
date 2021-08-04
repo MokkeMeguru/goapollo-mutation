@@ -35,10 +35,10 @@ jobs:
           name: show-coverage
           command: |
             cat /tmp/workspace/c.out
-      - run: echo "below codecov/upload is success"
-      - codecov/upload:
-          file: /tmp/workspace/c.out
-          token: codecov_token
+      # - run: echo "below codecov/upload is success"
+      # - codecov/upload:
+      #     file: /tmp/workspace/c.out
+      #     token: codecov_token
       - store_artifacts:
           path: /tmp/artifacts
       - persist_to_workspace:
