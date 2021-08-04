@@ -23,7 +23,7 @@ jobs:
       - run:
           name: go test & coverage generate
           command: |
-            go test -race ./... -coverprofile=c.out
+            go test -race ./... -coverprofile=c.out -covermode=atomic
             go tool cover -html=c.out -o coverage.html
             mv coverage.html /tmp/artifacts
             mv c.out /tmp/workspace
@@ -37,7 +37,6 @@ jobs:
           root: /tmp/workspace
           paths:
             - c.out
-
   show_artifacts_path:
     docker:
       - image: cimg/base:2021.07
@@ -57,6 +56,9 @@ jobs:
     steps:
       - attach_workspace:
           at: /tmp/workspace
+      - run:
+          name: show out
+          command: cat /tmp/workspace/c.out
       - codecov/upload:
           file: /tmp/workspace/c.out
           token: CODECOV_TOKEN
