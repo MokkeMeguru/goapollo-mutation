@@ -28,7 +28,7 @@ func NewBasicRandomGenerator(seed int64) *BasicRandomGenerator {
 }
 
 func (m *BasicRandomGenerator) RandInt(closedLeft, openedRight int) (int, error) {
-	if closedLeft > openedRight {
+	if closedLeft-openedRight <= 0 {
 		return 0, xerrors.New(fmt.Sprintf("invalid argument: closedLeft %d should be less than openedRight %d", closedLeft, openedRight))
 	}
 	return rand.Intn(openedRight-closedLeft) + closedLeft, nil
